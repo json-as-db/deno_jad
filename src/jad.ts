@@ -42,8 +42,13 @@ export class JADSchema {
                 if (value.type === 'Array') {
                     if (typeof dataValue !== 'object') return false
                 }
+            } else if (typeof value === 'string') {
+                if (value === 'String' && typeof dataValue !== 'string') return false
+                if (value === 'Number' && typeof dataValue !== 'number') return false
+                if (value === 'Date' && typeof dataValue !== 'object') return false
+                if (value === 'Object' && typeof dataValue !== 'object') return false
+                if (value === 'Array' && typeof dataValue !== 'object') return false
             }
-
         }
 
         return true

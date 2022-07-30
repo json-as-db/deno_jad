@@ -6,5 +6,6 @@
         "./**/*.ts",
         "README.md"
     ],
-    "entry": "./mod.ts"
+    "entry": "./mod.ts",
+    "version": "1.0.0"
 }
