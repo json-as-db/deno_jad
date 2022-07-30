@@ -1,0 +1,1 @@
+export { JADSchema } from './src/index.ts'
