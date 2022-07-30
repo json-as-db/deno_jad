@@ -1,4 +1,4 @@
-import { JADOptions, schemaOptionsType, schemaType } from './types/JAD.d.ts'
+import { JADOptions, schemaOptionsType, schemaType } from './types/jad.d.ts'
 
 export class JADSchema {
     schema!: schemaType
