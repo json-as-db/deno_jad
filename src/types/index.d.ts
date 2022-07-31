@@ -1,21 +1,37 @@
-import { JADOptions } from './jad.d.ts'
-import { ModelTable } from './model.d.ts'
+import { SchemaOptionsType, SchemaType } from './jad.d.ts'
+import { JADModel } from './model.d.ts'
 
-declare class JADSchema {
-
-    /** 
-     * Creates a new schema
+declare module 'JAD' {
+    /**
+     * Create a new Schema
     */
-    constructor(options: JADOptions)
+    export class JADSchema {
+        /** 
+         * Creates a new schema
+         * ```typescript
+         * const schema = new JADSchema({
+         *    name: 'String',
+         *    lastName: {
+         *       type: 'String',
+         *      required: true
+         *    }
+         * }, {
+         *   timestamp: true
+         * })
+         * ```
+        */
+        constructor(schema: SchemaType, schemaOptions?: SchemaOptionsType)
 
-    /** 
-     * Validate data against schema
-     * @param data Data to validate
-     * @returns True if data is valid, false otherwise
+        /** 
+         * Validate data against schema
+         * @param data Data to validate
+         * @returns True if data is valid, false otherwise
+        */
+        validate(data: Record<string, unknown>): boolean
+    }
+
+    /**
+     * Creates a new model
     */
-    validate(data: Record<string, unknown>): boolean
-}
-
-export function model() {
-    function get(): Promise<ModelTable>
+    export function model(): JADModel
 }

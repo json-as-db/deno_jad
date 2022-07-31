@@ -1,13 +1,6 @@
-export interface JADOptions {
-    schema: schemaType
-    schemaOptions?: schemaOptionsType
-}
+export type SchemaType = Record<string, 'String' | 'Number' | 'Date' | 'Object' | 'Array' | SchemaTypeOptions>
 
-export type schemaType = {
-    [key: string]: 'String' | 'Number' | 'Date' | 'Object' | 'Array' | schemaTypeOptions
-}
-
-type schemaTypeOptions = {
+type SchemaTypeOptions = {
     type: 'String' | 'Number' | 'Date' | 'Object' | 'Array'
     required?: boolean
     min?: number
@@ -16,6 +9,6 @@ type schemaTypeOptions = {
     maxLength?: number
 }
 
-export type schemaOptionsType = {
+export type SchemaOptionsType = {
     timestamp?: boolean
 }

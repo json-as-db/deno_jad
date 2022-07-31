@@ -1,12 +1,12 @@
-import { JADOptions, schemaOptionsType, schemaType } from './types/jad.d.ts'
+import { SchemaOptionsType, SchemaType } from './types/jad.d.ts'
 
-export class JADSchema {
-    schema!: schemaType
-    schemaOptions: schemaOptionsType | undefined
+export class Schema {
+    schema!: SchemaType
+    schemaOptions: SchemaOptionsType | undefined
 
-    construnctor(options: JADOptions) {
-        this.schema = options.schema
-        this.schemaOptions = options.schemaOptions
+    construnctor(schema: SchemaType, schemaOptions?: SchemaOptionsType) {
+        this.schema = schema
+        this.schemaOptions = schemaOptions
     }
 
     validate(data: Record<string, unknown>): boolean {
