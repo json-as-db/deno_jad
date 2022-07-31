@@ -1,7 +1,7 @@
 {
     "importMap": "./importMap.json",
     "tasks": {
-        "test": "deno test test.ts"
+        "test": "deno test --allow-read --allow-write test.ts"
     },
     "lint": {
         "rules": {

@@ -37,10 +37,17 @@ export function model(table: string, schema: Schema): JADModel {
     async function create(data: ModelItem) {
         try {
             const dbData = await getData()
+            const [isValidated, errors] = schema.validate(data)
 
-            if (!schema.validate(data)) throw new Error('data is not valid')
+            if (!isValidated) throw new Error(errors)
 
             data._id = crypto.randomUUID()
+
+            if (schema.schemaOptions?.timestamps) {
+                data.createdAt = new Date()
+                data.updatedAt = new Date()
+            }
+
             dbData[table].push(data)
 
             await Deno.writeTextFile(dbPath, JSON.stringify(dbData))
@@ -56,8 +63,14 @@ export function model(table: string, schema: Schema): JADModel {
             const item = dbData[table].find(item => item.id === id)!
 
             if (!item) throw new Error('item not found')
-            if (!schema.validate(data)) throw new Error('data is not valid')
 
+            const [isValidated, errors] = schema.validate(data)
+
+            if (!isValidated) throw new Error(errors)
+
+            if (schema.schemaOptions?.timestamps) {
+                item.updatedAt = new Date()
+            }
             Object.assign(item, data)
 
             await Deno.writeTextFile(dbPath, JSON.stringify(dbData))
