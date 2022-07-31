@@ -24,7 +24,7 @@ export class JADSchema {
 }
 
 export type SchemaType = Record<string, 'String' | 'Number' | 'Date' | 'Object' | 'Array' | SchemaTypeOptions>
-type SchemaTypeOptions = {
+export type SchemaTypeOptions = {
     type: 'String' | 'Number' | 'Date' | 'Object' | 'Array'
     required?: boolean
     min?: number
