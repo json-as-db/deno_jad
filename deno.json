@@ -1,0 +1,13 @@
+{
+    "importMap": "./importMap.json",
+    "tasks": {
+        "test": "deno test test.ts"
+    },
+    "lint": {
+        "rules": {
+            "exclude": [
+                "no-prototype-builtins"
+            ]
+        }
+    }
+}

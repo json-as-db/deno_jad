@@ -1,0 +1,11 @@
+{
+    "name": "jad",
+    "description": "Usa archivos json como base de datos en deno",
+    "homepage": "https://github.com/json-as-db/deno_jad",
+    "files": [
+        "./**/*.ts",
+        "README.md"
+    ],
+    "entry": "./mod.ts",
+    "version": "1.0.0"
+}
