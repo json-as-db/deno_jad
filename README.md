@@ -19,7 +19,7 @@ Crea un archivo `jad.config.json` en tu directorio de trabajo de lo contrario se
 **2. Uso del modulo**
 
 ```typescript
-import jad from 'https://deno.land/x/jad/mod.ts'
+import jad from 'https://deno.land/x/deno_jad/mod.ts'
 
 const { Schema, model } = jad
 

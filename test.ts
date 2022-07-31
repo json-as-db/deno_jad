@@ -1,9 +1,20 @@
-const a = {
-    a: 1,
-    b: 2,
-    c: 3,
-}
+import jad from './mod.ts'
 
-for (const key in a) {
-    console.log(key);
-}
+const { Schema, model } = jad
+
+const schema = new Schema({
+    name: 'String',
+    age: {
+        type: 'Number',
+        required: true,
+    }
+})
+
+const User = model('User', schema)
+
+await User.create({
+    age: 30,
+    name: 'John'
+})
+
+await console.log(await User.get())

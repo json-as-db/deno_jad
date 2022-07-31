@@ -27,7 +27,7 @@ declare module 'JAD' {
          * @param data Data to validate
          * @returns True if data is valid, false otherwise
         */
-        validate(data: Record<string, unknown>): boolean
+        validate(data: Record<string, unknown>): [boolean, string]
     }
 
     /**

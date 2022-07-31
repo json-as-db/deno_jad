@@ -27,4 +27,4 @@ export interface JADModel {
 
 export type ModelDb = Record<string, ModelTable>
 export type ModelTable = Array<ModelItem>
-export type ModelItem = Record<string, string | number | boolean>
+export type ModelItem = Record<string, string | number | boolean | Date | Record<string, unknown> | Array<unknown>>
