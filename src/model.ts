@@ -1,6 +1,5 @@
-import { join } from 'deno-path'
 import { Schema } from './jad.ts'
-import { existsSync, ensureFileSync } from 'deno-fs'
+import { existsSync, ensureFileSync, join } from '../deps.ts'
 import { ModelDb, JADModel, ModelItem } from './types/model.d.ts'
 
 export function model(table: string, schema: Schema): JADModel {

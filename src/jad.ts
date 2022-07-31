@@ -19,11 +19,7 @@ export class Schema implements JADSchema {
         }
         for (const key in schema) {
             const value = schema[key]
-
             const dataValue = data[key]
-
-            console.log(typeof value, key)
-            console.log(typeof dataValue)
 
             if (typeof value === 'object' && !!dataValue) {
                 if (value.required === true && typeof dataValue === 'undefined') return [false, `${key} is required`]

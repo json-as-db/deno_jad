@@ -1,12 +1,18 @@
 {
-    "importMap": "./importMap.json",
     "tasks": {
-        "test": "deno test --allow-read --allow-write test.ts"
+        "test": "deno test --allow-read --allow-write"
     },
     "lint": {
         "rules": {
             "exclude": [
                 "no-prototype-builtins"
+            ]
+        }
+    },
+    "test": {
+        "files": {
+            "include": [
+                "test.ts"
             ]
         }
     }
