@@ -1,6 +1,4 @@
-import jad from './mod.ts'
-
-const { Schema, model } = jad
+import { Schema, model } from './mod.ts'
 
 const schema = new Schema({
     name: 'String',

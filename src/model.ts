@@ -2,6 +2,13 @@ import { Schema } from './jad.ts'
 import { existsSync, ensureFileSync, join } from '../deps.ts'
 import { ModelDb, JADModel, ModelItem } from './types/model.d.ts'
 
+/**
+ * Create a new JAD Model
+ * @param table
+ * The table name in the database
+ * @param schema
+ * The JAD Schema for the model
+*/
 export function model(table: string, schema: Schema): JADModel {
     if (!table) throw new Error('table is required')
     if (!schema) throw new Error('schema is required')
