@@ -25,6 +25,7 @@ export class Schema implements JADSchema {
      * {
      *     timestamps: true,
      * }
+     * ```
     */
     constructor(schema: SchemaType, schemaOptions?: SchemaOptionsType) {
         this.schema = schema
