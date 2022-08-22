@@ -1,6 +1,6 @@
-import { Schema } from './jad.ts'
+import { Schema } from './schema.ts'
 import { existsSync, ensureFileSync, join } from '../deps.ts'
-import { ModelDb, JADModel, ModelItem } from './types/model.d.ts'
+import { ModelDb, JADModel, ModelItem } from '../types/model.d.ts'
 
 /**
  * Create a new JAD Model
@@ -23,7 +23,7 @@ export function model(table: string, schema: Schema): JADModel {
 
     async function getData() {
         const dbContent = await Deno.readTextFile(dbPath)
-        const dbData = JSON.parse(dbContent)
+        const dbData = dbContent === '' ? {} : JSON.parse(dbContent)
 
         if (!dbData[table]) dbData[table] = []
 
@@ -37,67 +37,56 @@ export function model(table: string, schema: Schema): JADModel {
 
     async function getById(id: string) {
         const dbData = await getData()
-        return dbData[table].find(item => item.id === id)!
+        return dbData[table].find(item => item._id === id)!
     }
 
     async function create(data: ModelItem) {
-        try {
-            const dbData = await getData()
-            const [isValidated, errors] = schema.validate(data)
+        const dbData = await getData()
+        const [isValidated, errors] = schema.validate(data)
 
-            if (!isValidated) throw new Error(errors)
+        if (!isValidated) throw new Error(errors)
 
-            data._id = crypto.randomUUID()
+        data._id = randomId()
 
-            if (schema.schemaOptions?.timestamps) {
-                data.createdAt = new Date()
-                data.updatedAt = new Date()
-            }
-
-            dbData[table].push(data)
-
-            await Deno.writeTextFile(dbPath, JSON.stringify(dbData))
-            return data
-        } catch (error) {
-            throw error
+        if (schema.schemaOptions?.timestamps) {
+            data.createdAt = new Date()
+            data.updatedAt = new Date()
         }
+
+        dbData[table].push(data)
+
+        await Deno.writeTextFile(dbPath, JSON.stringify(dbData, null, 4))
+        return data
     }
 
     async function updateById(id: string, data: ModelItem) {
-        try {
-            const dbData = await getData()
-            const item = dbData[table].find(item => item.id === id)!
+        const dbData = await getData()
+        const item = dbData[table].find(item => item._id === id)!
 
-            if (!item) throw new Error('item not found')
+        if (!item) throw new Error('item not found')
 
-            const [isValidated, errors] = schema.validate(data)
+        const [isValidated, errors] = schema.validate(data)
 
-            if (!isValidated) throw new Error(errors)
+        if (!isValidated) throw new Error(errors)
 
-            if (schema.schemaOptions?.timestamps) {
-                item.updatedAt = new Date()
-            }
-            Object.assign(item, data)
-
-            await Deno.writeTextFile(dbPath, JSON.stringify(dbData))
-        } catch (error) {
-            throw error
+        if (schema.schemaOptions?.timestamps) {
+            item.updatedAt = new Date()
         }
+
+        Object.assign(item, data)
+
+        await Deno.writeTextFile(dbPath, JSON.stringify(dbData, null, 4))
     }
 
     async function deleteById(id: string) {
-        try {
-            const dbData = await getData()
-            const item = dbData[table].find(item => item.id === id)!
+        const dbData = await getData()
+        const item = await getById(id)
 
-            if (!item) throw new Error('item not found')
+        if (!item) throw new Error('item not found')
 
-            dbData[table] = dbData[table].filter(item => item.id !== id)
+        dbData[table] = dbData[table].filter(item => item.id !== id)
 
-            await Deno.writeTextFile(dbPath, JSON.stringify(dbData))
-        } catch (error) {
-            throw error
-        }
+        await Deno.writeTextFile(dbPath, JSON.stringify(dbData, null, 4))
     }
 
 
@@ -113,10 +102,22 @@ export function model(table: string, schema: Schema): JADModel {
 function getJsonConfig() {
     const jsonConfig = join(Deno.cwd(), 'jad.config.json')
 
-    if (!existsSync(jsonConfig)) return ['./', 'jad.db.json']
+    if (!existsSync(jsonConfig)) return ['./', 'jad.json']
 
     const configContent = Deno.readTextFileSync(jsonConfig)
     const config = JSON.parse(configContent)
 
     return [config.path, config.db]
+}
+
+export function randomId(len = 20) {
+    let now = new Date().getTime()
+    const rid = 'x'.repeat(len).replace(/[x]/g, () => {
+        const random = (now + Math.random() * 16) % 16 | 0
+        now = Math.floor(now / 16)
+
+        return random.toString(16)
+    })
+
+    return rid
 }

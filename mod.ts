@@ -1,2 +1,2 @@
-export { Schema } from './src/jad.ts'
+export { Schema } from './src/schema.ts'
 export { model } from './src/model.ts'

@@ -1,42 +1,14 @@
-import { SchemaOptionsType, SchemaType, JADSchema } from './types/jad.d.ts'
+import { SchemaOptionsType, SchemaType, JADSchema } from '../types/schema.d.ts'
 
-/**
- * Create a new JAD Schema
-*/
 export class Schema implements JADSchema {
     schema!: SchemaType
-    schemaOptions: SchemaOptionsType | undefined
+    schemaOptions?: SchemaOptionsType
 
-    /**
-     * @param schema
-     * Creates a new Schema object
-     * ```typescript
-     * {
-     *     name: 'String',
-     *     age: {
-     *         type: 'Number',
-     *         required: true,
-     *     }
-     * }
-     * ```
-     * @param schemaOptions
-     * Schema options
-     * ```typescript
-     * {
-     *     timestamps: true,
-     * }
-     * ```
-    */
     constructor(schema: SchemaType, schemaOptions?: SchemaOptionsType) {
         this.schema = schema
         this.schemaOptions = schemaOptions
     }
 
-    /**
-     * Validate a value against the schema
-     * @param value
-     * Value to validate
-    */
     validate(data: Record<string, unknown>): [boolean, string] {
         if (typeof data !== 'object') return [false, 'data is not an object']
 

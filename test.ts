@@ -6,13 +6,21 @@ const schema = new Schema({
         type: 'Number',
         required: true,
     }
+}, {
+    timestamps: true,
 })
 
 const User = model('User', schema)
 
-await User.create({
+const a = await User.create({
     age: 30,
     name: 'John'
 })
 
+await User.updateById(a._id, {
+    age: 331,
+})
+
+await User.deleteById(a._id)
 await console.log(await User.get())
+await console.log(await User.getById(a._id))

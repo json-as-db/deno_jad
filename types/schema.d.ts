@@ -1,3 +1,6 @@
+/**
+ * Create a new Schema for the model
+*/
 export class JADSchema {
     /** 
      * Creates a new schema
@@ -31,6 +34,8 @@ export type SchemaTypeOptions = {
     max?: number
     minLength?: number
     maxLength?: number
+    unique?: boolean
+    default?: unknown
 }
 export type SchemaOptionsType = {
     timestamps?: boolean
